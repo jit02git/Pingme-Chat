@@ -1,19 +1,21 @@
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./Config/connect');
-const userController = require('./Controllers/UserController');
+const userRoutes = require('./Route/userRoute');
 
 const app = express();
 
-// Connect to MongoDB
+// Connect DB
 connectDB();
 
-// Middleware
+// Middleware (ALWAYS before routes)
 app.use(cors());
 app.use(express.json());
 
-app.post('/api/register', userController.register);
+// Routes   
+app.use('/api/users', userRoutes);
 
+// Servers
 app.listen(process.env.PORT || 5000, () => {
     console.log(`Server is running on port ${process.env.PORT || 5000}`);
 });
